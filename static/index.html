@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Semantic Search</title>
+    <link rel="stylesheet" href="/static/styles.css?v=2">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="hero">
+            <h1>Mini Semantic Search</h1>
+            <a class="docs-link" href="/docs" target="_blank" rel="noreferrer">Open API docs</a>
+        </header>
+
+        <main class="layout">
+            <section class="panel">
+                <div class="panel-header">
+                    <h2>1. Ingest data</h2>
+                </div>
+
+                <div class="grid-three">
+                    <form id="openalex-form" class="source-card">
+                        <h3>OpenAlex</h3>
+                        <label>
+                            Documents
+                            <input type="number" name="limit" value="20" min="1" max="50" required>
+                        </label>
+                        <button type="submit">Import</button>
+                    </form>
+
+                    <form id="europepmc-form" class="source-card">
+                        <h3>Europe PMC</h3>
+                        <label>
+                            Documents
+                            <input type="number" name="limit" value="20" min="1" max="50" required>
+                        </label>
+                        <button type="submit">Import</button>
+                    </form>
+
+                    <form id="upload-form" class="source-card" enctype="multipart/form-data">
+                        <h3>Upload TXT</h3>
+                        <label>
+                            TXT file
+                            <input type="file" name="file" accept=".txt,text/plain" required>
+                        </label>
+                        <button type="submit">Upload</button>
+                    </form>
+                </div>
+
+                <div id="ingestion-message" class="message" aria-live="polite"></div>
+            </section>
+
+            <section class="panel">
+                <div class="panel-header">
+                    <h2>2. Search</h2>
+                </div>
+
+                <form id="search-form" class="search-form">
+                    <label>
+                        Query
+                        <input type="text" id="search-query" name="query" placeholder="Search in imported documents" required>
+                    </label>
+                    <label>
+                        Source
+                        <select id="source-filter" name="source">
+                            <option value="">All sources</option>
+                        </select>
+                    </label>
+                    <button type="submit">Search</button>
+                </form>
+
+                <div id="search-results" class="results-grid"></div>
+            </section>
+
+            <section class="panel">
+                <div class="panel-header">
+                    <h2>3. Current knowledge base</h2>
+                </div>
+
+                <div id="stats-box" class="stats-row"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/static/app.js?v=3"></script>
+</body>
+</html>

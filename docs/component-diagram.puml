@@ -1,0 +1,41 @@
+@startuml
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+
+package "Presentation layer" {
+  [Web Frontend\nHTML/CSS/JS]
+}
+
+package "Application layer" {
+  [FastAPI REST API]
+  [Ingestion Service]
+  [Search Service]
+}
+
+package "Processing layer" {
+  [OpenAlex Adapter]
+  [Europe PMC Adapter]
+  [PDF Parser]
+  [XML/Text Parser]
+  [Chunker]
+}
+
+database "ChromaDB\n(vector database)" as chroma
+cloud "OpenAlex API" as openalex
+cloud "Europe PMC API" as europepmc
+folder "Uploaded TXT" as upload
+
+[Web Frontend\nHTML/CSS/JS] --> [FastAPI REST API]
+[FastAPI REST API] --> [Ingestion Service]
+[FastAPI REST API] --> [Search Service]
+[Ingestion Service] --> [OpenAlex Adapter]
+[Ingestion Service] --> [Europe PMC Adapter]
+[Ingestion Service] --> [PDF Parser]
+[Ingestion Service] --> [XML/Text Parser]
+[Ingestion Service] --> [Chunker]
+[Chunker] --> chroma
+[Search Service] --> chroma
+[OpenAlex Adapter] --> openalex
+[Europe PMC Adapter] --> europepmc
+[XML/Text Parser] --> upload
+@enduml

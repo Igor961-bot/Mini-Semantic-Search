@@ -1,0 +1,25 @@
+@startuml
+node "External user machine" {
+  artifact "Web browser"
+}
+
+node "Virtual machine" {
+  node "Docker container" {
+    artifact "FastAPI app"
+    artifact "Static frontend"
+  }
+
+  database "Persistent volume\nChromaDB files" as volume
+  folder "Log files" as logs
+}
+
+cloud "OpenAlex API" as openalex
+cloud "Europe PMC API" as europepmc
+
+"Web browser" --> "FastAPI app" : HTTP to VM public IP
+"FastAPI app" --> "Static frontend" : serves files
+"FastAPI app" --> volume : read/write chunks
+"FastAPI app" --> logs : write logs
+"FastAPI app" --> openalex : fetch documents
+"FastAPI app" --> europepmc : fetch documents
+@enduml
