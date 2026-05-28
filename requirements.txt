@@ -1,7 +1,7 @@
-fastapi==0.136.1
-uvicorn[standard]==0.46.0
-chromadb==1.5.9
-pypdf==6.11.0
-httpx==0.28.1
-python-multipart==0.0.28
-pydantic-settings==2.14.1
+fastapi
+uvicorn[standard]
+chromadb
+pypdf
+httpx
+python-multipart
+pydantic-settings
