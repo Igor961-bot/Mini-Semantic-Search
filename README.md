@@ -65,7 +65,7 @@ Zgodnie z założeniami projektowymi, system wykorzystuje architekturę warstwow
 
 
 ### Diagram Komponentów
-![Diagram Komponentów](docs/component-diagram.png)
+![Diagram Komponentów](docs/component_diagram.png)
 
 ### Diagram Wdrożeniowy (Deployment)
-![Diagram Wdrożeniowy](docs/deployment-diagram.png)
+![Diagram Wdrożeniowy](docs/deployment_diagram.png)
