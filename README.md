@@ -37,3 +37,28 @@ open:
 ```powershell
 .\.venv\Scripts\python scripts\load_demo_data.py
 ```
+
+## Testing
+
+Aby uruchomić testy, upewnij się, że Twoje wirtualne środowisko `.venv` jest aktywne.
+
+**1. Testy jednostkowe (Unit Tests):**
+Weryfikują poprawność działania głównych ścieżek API.
+```powershell
+.\.venv\Scripts\python -m pytest
+```
+
+**2. Testy wydajnościowe (Performance Tests):**
+Zanim uruchomisz test wydajnościowy, upewnij się, że serwer głównej aplikacji (Local run) działa w tle. Następnie w nowym terminalu wpisz:
+```powershell
+.\.venv\Scripts\python tests/performance_test.py
+```
+
+## Architektura i Uzasadnienie Wyboru Komponentów
+
+Zgodnie z założeniami projektowymi, system wykorzystuje architekturę warstwową. Wybór technologii został podyktowany optymalizacją procesu przetwarzania danych wektorowych:
+
+* **FastAPI (Backend & API):** Wybrano ze względu na natywną asynchroniczność (niezbędną przy równoległym pobieraniu danych z zewnętrznych źródeł jak OpenAlex czy Europe PMC), szybkość działania oraz wbudowane generowanie dokumentacji (Swagger UI).
+* **ChromaDB (Baza Danych):** Wektorowa baza danych idealna do wyszukiwania semantycznego. Działa jako wbudowana baza plikowa z systemem stałego wolumenu (Persistent volume), co minimalizuje narzut infrastrukturalny, zachowując wysoką wydajność przy przeszukiwaniu fragmentów tekstów.
+* **Docker & Docker Compose (Środowisko Uruchomieniowe):** Zapewnia izolację i powtarzalność środowisk. Podział na środowisko deweloperskie i produkcyjne symuluje profesjonalny cykl życia oprogramowania.
+* **Pytest & HTTPX (Testy):** Użyte do spełnienia wymogu testów jednostkowych oraz wydajnościowych bez konieczności instalowania ciężkich zewnętrznych narzędzi.

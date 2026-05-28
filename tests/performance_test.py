@@ -2,7 +2,7 @@ import time
 import httpx
 
 URL = "http://127.0.0.1:8000/"
-TOTAL_REQUESTS = 100
+TOTAL_REQUESTS = 100  
 
 print(f"Rozpoczynam test wydajnościowy dla: {URL}")
 print(f"Wysyłam {TOTAL_REQUESTS} zapytań sekwencyjnie...")

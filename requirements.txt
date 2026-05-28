@@ -5,3 +5,5 @@ pypdf
 httpx
 python-multipart
 pydantic-settings
+pytest
+httpx
