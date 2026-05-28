@@ -62,3 +62,10 @@ Zgodnie z założeniami projektowymi, system wykorzystuje architekturę warstwow
 * **ChromaDB (Baza Danych):** Wektorowa baza danych idealna do wyszukiwania semantycznego. Działa jako wbudowana baza plikowa z systemem stałego wolumenu (Persistent volume), co minimalizuje narzut infrastrukturalny, zachowując wysoką wydajność przy przeszukiwaniu fragmentów tekstów.
 * **Docker & Docker Compose (Środowisko Uruchomieniowe):** Zapewnia izolację i powtarzalność środowisk. Podział na środowisko deweloperskie i produkcyjne symuluje profesjonalny cykl życia oprogramowania.
 * **Pytest & HTTPX (Testy):** Użyte do spełnienia wymogu testów jednostkowych oraz wydajnościowych bez konieczności instalowania ciężkich zewnętrznych narzędzi.
+
+
+### Diagram Komponentów
+![Diagram Komponentów](docs/component-diagram.png)
+
+### Diagram Wdrożeniowy (Deployment)
+![Diagram Wdrożeniowy](docs/deployment-diagram.png)
