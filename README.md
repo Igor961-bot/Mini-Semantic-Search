@@ -1,4 +1,4 @@
-# Mini Semantic Search
+# Mini Semantic Search - Igor Zawada, Jakub Miszczak
 
 ## Local run
 
@@ -40,28 +40,27 @@ open:
 
 ## Testing
 
-Aby uruchomić testy, upewnij się, że Twoje wirtualne środowisko `.venv` jest aktywne.
+(środowisko `.venv` aktywne)
 
 **1. Testy jednostkowe (Unit Tests):**
-Weryfikują poprawność działania głównych ścieżek API.
 ```powershell
 .\.venv\Scripts\python -m pytest
 ```
 
 **2. Testy wydajnościowe (Performance Tests):**
-Zanim uruchomisz test wydajnościowy, upewnij się, że serwer głównej aplikacji (Local run) działa w tle. Następnie w nowym terminalu wpisz:
+Serwer musi działać w tle. W nowym terminalu:
 ```powershell
 .\.venv\Scripts\python tests/performance_test.py
 ```
 
 ## Architektura i Uzasadnienie Wyboru Komponentów
 
-Zgodnie z założeniami projektowymi, system wykorzystuje architekturę warstwową. Wybór technologii został podyktowany optymalizacją procesu przetwarzania danych wektorowych:
+System opiera się na architekturze warstwowej, co pozwala na czytelny podział obowiązków w kodzie. Technologie dobraliśmy tak, żeby całość działała szybko, stabilnie i sprawnie obsługiwała obróbkę wektorową tekstów:
 
-* **FastAPI (Backend & API):** Wybrano ze względu na natywną asynchroniczność (niezbędną przy równoległym pobieraniu danych z zewnętrznych źródeł jak OpenAlex czy Europe PMC), szybkość działania oraz wbudowane generowanie dokumentacji (Swagger UI).
-* **ChromaDB (Baza Danych):** Wektorowa baza danych idealna do wyszukiwania semantycznego. Działa jako wbudowana baza plikowa z systemem stałego wolumenu (Persistent volume), co minimalizuje narzut infrastrukturalny, zachowując wysoką wydajność przy przeszukiwaniu fragmentów tekstów.
-* **Docker & Docker Compose (Środowisko Uruchomieniowe):** Zapewnia izolację i powtarzalność środowisk. Podział na środowisko deweloperskie i produkcyjne symuluje profesjonalny cykl życia oprogramowania.
-* **Pytest & HTTPX (Testy):** Użyte do spełnienia wymogu testów jednostkowych oraz wydajnościowych bez konieczności instalowania ciężkich zewnętrznych narzędzi.
+* **FastAPI (Backend i API):** Wybraliśmy ten framework ze względu na jego wysoką wydajność i wbudowaną obsługę asynchroniczności. Gdy aplikacja musi równolegle pobierać dane z różnych miejsc (jak OpenAlex czy Europe PMC), nie blokuje przy tym działania serwera. Dużym plusem jest też to, że interaktywna dokumentacja API (Swagger UI) generuje się tu automatycznie.
+* **ChromaDB (Baza Danych):** Stworzyliśmy wektorową baza danych, która jest najlepsza do wyszukiwania semantycznego (szukania po znaczeniu, a nie tylko po słowach). Wybraliśmy ją, bo działa jako lekka baza plikowa. Podpieliśmy ją pod stały wolumen (Persistent volume) w Dockerze, dzięki temu pobrane dokumenty i wektory są bezpieczne i nie znikają po wyłączeniu czy restarcie aplikacji.
+* **Docker i Docker Compose (Środowisko Uruchomieniowe):** Użyliśmy dwóch osobnych konfiguracji – deweloperskiej (do pisania kodu z podglądem na żywo) i produkcyjnej (do odpalenia na serwerze/VM). Dzięki temu projekt uruchomi się dokładnie tak samo. 
+* **Pytest i HTTPX (Testy):** Chcieliśmy zadbać o stabilność bez instalowania ciężkich i skomplikowanych narzędzi, więc skorzystaliśmy z bibliotek `pytest` do testów jednostkowym oraz `httpx` do napisania skryptu dla testów wydajnościowych.
 
 
 ### Diagram Komponentów
@@ -69,3 +68,11 @@ Zgodnie z założeniami projektowymi, system wykorzystuje architekturę warstwow
 
 ### Diagram Wdrożeniowy (Deployment)
 ![Diagram Wdrożeniowy](docs/deployment_diagram.png)
+
+
+
+### Podział pracy:
+| Członek zespołu | Zrealizowane zadania |
+| :--- | :--- |
+| **Igor Zawada** | FastAPI, integracja ChromaDB, logika biznesowa (wyszukiwanie, wektoryzacja), adaptery danych (OpenAlex, Europe PMC), konteneryzacja (Docker dev/prod) |
+| **Jakub Miszczak** | FastAPI, logika biznesowa (pobieranie, chunking), testy jednostkowe (pytest), testy wydajnościowe (httpx), diagramy UML, dokumentacja |
